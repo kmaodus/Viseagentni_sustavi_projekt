@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using static RentACarAsistent.Enums;
 
 namespace RentACarAsistent
@@ -48,7 +50,7 @@ namespace RentACarAsistent
 
             var korisnikoveŽelje = new List<Koncept<TipŽelja, Dictionary<string, string>>>
             {
-                new Koncept<TipŽelja, Dictionary<string, string>>(TipŽelja.Proizvođač, new Dictionary<string, string> { { "proizvodac",proizvodacAuta } }),
+                new Koncept<TipŽelja, Dictionary<string, string>>(TipŽelja.Proizvođač, new Dictionary<string, string> { { "proizvodac", proizvodacAuta } }),
                 //new Koncept<TipŽelja, Dictionary<string, string>>(TipŽelja.Proizvođač, new Dictionary<string, string> { { "proizvodac", "BMW, Audi, Mercedes Benz" } }),
                 new Koncept<TipŽelja, Dictionary<string, string>>(TipŽelja.Model, new Dictionary<string, string> { { "modeli", modelAuta } }),
                 //new Koncept<TipŽelja, Dictionary<string, string>>(TipŽelja.Model, new Dictionary<string, string> { { "modeli", "" +  "540" } }),
@@ -60,21 +62,33 @@ namespace RentACarAsistent
 
             var rentACarPonuda = rentACarAsistent.DohvatiPlan(korisnikoveŽelje);
 
-            Console.WriteLine(rentACarPonuda == null ?
-            "Sorry, nemam plan za tebe" : IspišiPonudu(rentACarPonuda));
+            if (rentACarPonuda == null)
+            {
+                Console.WriteLine("Žao mi je, ali nemam plan koji odgovara tvojim željama..");
+            }
+            else
+            {
+                Console.WriteLine("--- Ponuda za Vas ---");
+                Console.WriteLine($"Proizvođač: " + rentACarPonuda.First(x => x.Key == "proizvodac").Value.Split(',')[0]);
+            }
+            //Console.WriteLine(rentACarPonuda == null ?
+            //"Žao mi je, ali nemam plan koji odgovara tvojim željama.." : IspišiPonudu(rentACarPonuda));
             Console.ReadLine();
 
 
         }
-        static string IspišiPonudu(Dictionary<string, string> toPrint)
-        {
-            var result = "";
-            foreach (var keyValue in toPrint)
-            {
-                result += keyValue.Key + ", " + keyValue.Value + '\n';
-            }
-            return result;
-        }
+        //private static string IspišiPonudu(Dictionary<string, string> zaIspis)
+        //{
+        //    //var result = "";
+        //    //foreach (var keyValue in zaIspis)
+        //    //{
+        //    //    result += keyValue.Key + ", " + keyValue.Value + '\n';
+        //    //}
+
+        //    Console.WriteLine("--- Ponuda za Vas ---");
+        //    Console.WriteLine($"Proizvođač: " + zaIspis.First(x => x.Key == "proizvodac").Value.Split(',')[1]);
+
+        //}
 
 
         //private static void PrikaziOpcijeKorisnika()

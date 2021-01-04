@@ -8,7 +8,7 @@
         }
         public enum TipŽelja
         {
-            Proizvođač, Model, BudžetUKunama, Datum, SnagaMotoraHP
+            Proizvođač, Model, BudžetUKunama, Datum, SnagaMotoraHP, VrstaGoriva
         }
         public enum TipIntencije
         {

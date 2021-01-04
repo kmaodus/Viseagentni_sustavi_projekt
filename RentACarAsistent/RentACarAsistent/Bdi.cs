@@ -15,7 +15,7 @@ namespace RentACarAsistent
             Želje = new List<Koncept<TipŽelja, T>>();
             Intencije = new List<Koncept<TipŽelja, T>>();
         }
-        protected abstract IEnumerable<Koncept<TipIntencije, T>> Deliberate(IEnumerable<Koncept<TipŽelja, T>> želje);
-        protected abstract T MeansEndReasoning(IEnumerable<Koncept<TipIntencije, T>> intencije);
+        protected abstract IEnumerable<Koncept<TipIntencije, T>> Razmatranje(IEnumerable<Koncept<TipŽelja, T>> želje);
+        protected abstract T RazmatranjeOSredstvimaIRadnjama(IEnumerable<Koncept<TipIntencije, T>> intencije);
     }
 }

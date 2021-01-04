@@ -13,15 +13,15 @@ namespace RentACarAsistent
 
         public T DohvatiPlan(IEnumerable<Koncept<TipŽelja, T>> želje)
         {
-            return MeansEndReasoning(Deliberate(želje));
+            return RazmatranjeOSredstvimaIRadnjama(Razmatranje(želje));
         }
 
-        protected override IEnumerable<Koncept<TipIntencije, T>> Deliberate(IEnumerable<Koncept<TipŽelja, T>> želje)
+        protected override IEnumerable<Koncept<TipIntencije, T>> Razmatranje(IEnumerable<Koncept<TipŽelja, T>> želje)
         {
             return TraziAutomobil(želje.ToList());
         }
 
-        protected override T MeansEndReasoning(IEnumerable<Koncept<TipIntencije, T>> intencije)
+        protected override T RazmatranjeOSredstvimaIRadnjama(IEnumerable<Koncept<TipIntencije, T>> intencije)
         {
             return intencije.FirstOrDefault() == null ? null : intencije.First().KonceptReprezentacija;
         }
@@ -29,6 +29,7 @@ namespace RentACarAsistent
 
         private IEnumerable<Koncept<TipIntencije, T>> TraziAutomobil<T>(List<Koncept<TipŽelja, T>> želje) where T : Dictionary<string, string>
         {
+            var željeniGrad = želje.FirstOrDefault(ž => ž.Labela == TipŽelja.Grad);
             var željeniProizvođač = želje.First(ž => ž.Labela == TipŽelja.Proizvođač);
             var željeniModel = želje.First(ž => ž.Labela == TipŽelja.Model);
             var željeniMaxBudžet = želje.First(ž => ž.Labela == TipŽelja.BudžetUKunama);
@@ -36,10 +37,11 @@ namespace RentACarAsistent
             var željenaSnagaMotora = želje.First(ž => ž.Labela == TipŽelja.SnagaMotoraHP);
             var željenaVrstaGoriva = želje.FirstOrDefault(ž => ž.Labela == TipŽelja.VrstaGoriva);
 
+            var gradUnajmljivanja = željeniGrad.KonceptReprezentacija["grad"].Split(',');
             var proizvodacZaUnajmiti = željeniProizvođač.KonceptReprezentacija["proizvodac"].Split(',');
-            var modeliZaUnajmiti = željeniModel.KonceptReprezentacija["modeli"].Split(',');
+            var modelZaUnajmiti = željeniModel.KonceptReprezentacija["model"].Split(',');
             var maxBudžet = double.Parse(željeniMaxBudžet.KonceptReprezentacija["maxKuna"]);
-            DateTime datumOd = DateTime.Parse(željeniDatum.KonceptReprezentacija["datumOd"], new CultureInfo("nl-NL"));
+            DateTime datumOd = DateTime.Parse(željeniDatum.KonceptReprezentacija["datumOd"], new CultureInfo("hr-HR"));
             var brojDana = int.Parse(željeniDatum.KonceptReprezentacija["brojDana"]);
             var snagaMotora = int.Parse(željenaSnagaMotora.KonceptReprezentacija["snagaMotora"]);
             var vrstaGoriva = željenaVrstaGoriva.KonceptReprezentacija["gorivo"].Split(',');
@@ -50,8 +52,9 @@ namespace RentACarAsistent
             foreach (var rentACarPaket in rentACarPaketi)
             {
                 var data = rentACarPaket.KonceptReprezentacija as Dictionary<string, string>;
+                var grad = data["grad"].Split(',');
                 var proizvodacAuta = data["proizvodac"].Split(',');
-                var modeliAuta = data["modeli"].Split(',');
+                var modelAuta = data["model"].Split(',');
                 DateTime dostupnostNajma = DateTime.Parse(data["dostupno"], new CultureInfo("nl-NL"));
                 var brojDanaIznajmljivanja = int.Parse(data["dana"]);
                 var cijena = double.Parse(data["cijena"]);
@@ -59,7 +62,8 @@ namespace RentACarAsistent
                 var snaga = int.Parse(data["snagaMotora"]);
 
                 if (brojDanaIznajmljivanja <= brojDana &&
-                modeliAuta.Intersect(modeliZaUnajmiti).Count() == modeliAuta.Length &&
+                grad.Intersect(gradUnajmljivanja).Count() == grad.Length &&
+                modelAuta.Intersect(modelZaUnajmiti).Count() == modelAuta.Length &&
                 proizvodacAuta.Intersect(proizvodacZaUnajmiti).Count() == proizvodacAuta.Length &&
                 dostupnostNajma <= datumOd &&
                 cijena < maxBudžet &&

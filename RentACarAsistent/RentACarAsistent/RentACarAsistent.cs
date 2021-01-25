@@ -16,14 +16,15 @@ namespace RentACarAsistent
             return IzborSredstava(IzborCiljeva(želje));
         }
 
-        protected override IEnumerable<Koncept<TipIntencije, T>> IzborCiljeva(IEnumerable<Koncept<TipŽelja, T>> želje)
-        {
-            return TraziAutomobil(želje.ToList());
-        }
 
         protected override T IzborSredstava(IEnumerable<Koncept<TipIntencije, T>> intencije)
         {
             return intencije.FirstOrDefault() == null ? null : intencije.First().KonceptReprezentacija;
+        }
+
+        protected override IEnumerable<Koncept<TipIntencije, T>> IzborCiljeva(IEnumerable<Koncept<TipŽelja, T>> želje)
+        {
+            return TraziAutomobil(želje.ToList());
         }
 
 
@@ -55,7 +56,7 @@ namespace RentACarAsistent
                 var grad = data["grad"].Split(',');
                 var proizvodacAuta = data["proizvodac"].Split(',');
                 var modelAuta = data["model"].Split(',');
-                DateTime dostupnostNajma = DateTime.Parse(data["dostupno"], new CultureInfo("nl-NL"));
+                DateTime dostupnostNajma = DateTime.Parse(data["dostupno"], new CultureInfo("hr-HR"));
                 var brojDanaIznajmljivanja = int.Parse(data["dana"]);
                 var cijena = double.Parse(data["cijena"]);
                 var pogonskoGorivo = data["gorivo"].Split(',');
@@ -66,7 +67,7 @@ namespace RentACarAsistent
                 modelAuta.Intersect(modelZaUnajmiti).Count() == modelAuta.Length &&
                 proizvodacAuta.Intersect(proizvodacZaUnajmiti).Count() == proizvodacAuta.Length &&
                 dostupnostNajma <= datumOd &&
-                cijena < maxBudžet &&
+                cijena <= maxBudžet &&
                 snaga >= snagaMotora &&
                 pogonskoGorivo.Intersect(vrstaGoriva).Count() == pogonskoGorivo.Length)
                 {

@@ -4,6 +4,7 @@
     {
         public TK Labela;
         public T KonceptReprezentacija;
+
         public Koncept(TK labela, T konceptReprezentacija)
         {
             Labela = labela;

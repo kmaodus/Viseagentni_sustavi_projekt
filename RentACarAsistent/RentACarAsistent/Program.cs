@@ -81,24 +81,25 @@ namespace RentACarAsistent
             {
                 Console.WriteLine(Environment.NewLine);
                 string separator = new string('=', 110);
+
                 Zapisnik.Ispis(Zapisnik.OBAVIJEST, "\tRent A Car Asistent \n");
                 Zapisnik.Ispis(Zapisnik.OBAVIJEST, $"{separator}\n");
 
-                Console.WriteLine("Unesite grad (Zagreb, Varazdin, Slavonski Brod, Split, Osijek): ");
+                Console.WriteLine("\nUnesite grad (Zagreb, Varazdin, Slavonski Brod, Split, Osijek): ");
                 string grad = Console.ReadLine();
-                Console.WriteLine("Unesite proizvođača vozila:  npr. BMW, Audi, Mercedes Benz, Opel, Tesla, VW...");
+                Console.WriteLine("\nUnesite proizvođača vozila:  npr. BMW, Audi, Mercedes Benz, Opel, Tesla, VW...");
                 string proizvodacAuta = Console.ReadLine();
-                Console.WriteLine("Unesite model auta: ");
+                Console.WriteLine("\nUnesite model auta: ");
                 string modelAuta = Console.ReadLine();
-                Console.WriteLine("Unesi maksimalni budžet u kunama po danu: ");
+                Console.WriteLine("\nUnesi maksimalni budžet u kunama po danu: ");
                 decimal maxBudžet = decimal.Parse(Console.ReadLine());
-                Console.WriteLine("Unesi broj dana najma: ");
+                Console.WriteLine("\nUnesi broj dana najma: ");
                 int brojDanaNajma = int.Parse(Console.ReadLine());
-                Console.WriteLine("Unesi datum pocetka najma (dd-mm-gggg): ");
+                Console.WriteLine("\nUnesi datum pocetka najma (dd-mm-gggg): ");
                 string datum = Console.ReadLine();
-                Console.WriteLine("Unesi snagu motora u HP (Horsepower): ");
+                Console.WriteLine("\nUnesi snagu motora u HP (Horsepower): ");
                 int snaga = int.Parse(Console.ReadLine());
-                Console.WriteLine("Unesi vrstu goriva (benzin, dizel, struja, hibrid): ");
+                Console.WriteLine("\nUnesi vrstu goriva (benzin, dizel, struja, hibrid): ");
                 string gorivo = Console.ReadLine();
                 Console.WriteLine(Environment.NewLine);
                 Console.WriteLine(separator);

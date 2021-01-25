@@ -13,15 +13,15 @@ namespace RentACarAsistent
 
         public T DohvatiPlan(IEnumerable<Koncept<TipŽelja, T>> želje)
         {
-            return RazmatranjeOSredstvimaIRadnjama(Razmatranje(želje));
+            return IzborSredstava(IzborCiljeva(želje));
         }
 
-        protected override IEnumerable<Koncept<TipIntencije, T>> Razmatranje(IEnumerable<Koncept<TipŽelja, T>> želje)
+        protected override IEnumerable<Koncept<TipIntencije, T>> IzborCiljeva(IEnumerable<Koncept<TipŽelja, T>> želje)
         {
             return TraziAutomobil(želje.ToList());
         }
 
-        protected override T RazmatranjeOSredstvimaIRadnjama(IEnumerable<Koncept<TipIntencije, T>> intencije)
+        protected override T IzborSredstava(IEnumerable<Koncept<TipIntencije, T>> intencije)
         {
             return intencije.FirstOrDefault() == null ? null : intencije.First().KonceptReprezentacija;
         }

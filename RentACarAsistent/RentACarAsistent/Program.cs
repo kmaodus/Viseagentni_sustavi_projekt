@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RentACarAsistent.Alati;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static RentACarAsistent.Enums;
@@ -80,9 +81,9 @@ namespace RentACarAsistent
             {
                 Console.WriteLine(Environment.NewLine);
                 string separator = new string('=', 110);
-                Console.WriteLine("\tRent A Car Asistent \n");
-                Console.WriteLine(separator);
-                Console.WriteLine(Environment.NewLine);
+                Zapisnik.Ispis(Zapisnik.OBAVIJEST, "\tRent A Car Asistent \n");
+                Zapisnik.Ispis(Zapisnik.OBAVIJEST, $"{separator}\n");
+
                 Console.WriteLine("Unesite grad (Zagreb, Varazdin, Slavonski Brod, Split, Osijek): ");
                 string grad = Console.ReadLine();
                 Console.WriteLine("Unesite proizvođača vozila:  npr. BMW, Audi, Mercedes Benz, Opel, Tesla, VW...");
@@ -117,10 +118,8 @@ namespace RentACarAsistent
 
                 if (rentACarPonuda == null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Žao mi je, ali nemam ponudu koja odgovara Vašim željama..");
-                    Console.WriteLine("Ugasi program? (da/ne)");
-                    Console.ResetColor();
+                    Zapisnik.Ispis(Zapisnik.UPOZORENJE, "Žao mi je, ali nemam ponudu koja odgovara Vašim željama..");
+                    Zapisnik.Ispis(Zapisnik.UPOZORENJE, "Ugasi program? (da/ne)");
                     if (Console.ReadLine() == "da")
                     {
                         ugasi = true;
@@ -130,10 +129,8 @@ namespace RentACarAsistent
                 else
                 {
                     Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("--- Ponuda za Vas ---");
-                    Console.ResetColor();
-                    Console.WriteLine(separator);
+                    Zapisnik.Ispis(Zapisnik.USPJEH, "--- Ponuda za Vas ---");
+                    Zapisnik.Ispis(Zapisnik.USPJEH, separator);
                     Console.WriteLine($"\tGrad: " + rentACarPonuda.First(x => x.Key == "grad").Value.Split(',')[0]);
                     Console.WriteLine($"\tProizvođač: " + rentACarPonuda.First(x => x.Key == "proizvodac").Value.Split(',')[0]);
                     Console.WriteLine($"\tModel: " + rentACarPonuda.First(x => x.Key == "model").Value.Split(',')[0]);
@@ -144,8 +141,8 @@ namespace RentACarAsistent
                     Console.WriteLine($"\tMinimalan broj dana najma: " + rentACarPonuda.First(x => x.Key == "dana").Value.Split(',')[0] + " dana");
                     Console.WriteLine($"\t{$"Web stranica: "}{rentACarPonuda.First(x => x.Key == "webPage").Value.Split(',')[0]}");
 
-                    Console.WriteLine(separator);
-                    Console.WriteLine("\nUgasi program? (da/ne)");
+                    Zapisnik.Ispis(Zapisnik.USPJEH, separator);
+                    Zapisnik.Ispis(Zapisnik.OBAVIJEST, "\nUgasi program? (da/ne)");
                     if (Console.ReadLine() == "da")
                     {
                         ugasi = true;
